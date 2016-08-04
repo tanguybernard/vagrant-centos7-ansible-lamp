@@ -39,10 +39,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 vb.gui = false
             end
             if servers["prov"] == "ansible"
-            srv.vm.provision "ansible" do |ansible|
-                ansible.playbook = "ansible/playbook.yml"
-                ansible.sudo = true
-                #ansible.inventory_path = "playbooks"
+                srv.vm.provision "ansible" do |ansible|
+                    ansible.playbook = "ansible/playbook.yml"
+                    ansible.sudo = true
+                    #ansible.inventory_path = "playbooks"
+                end
             end
         end
     end
