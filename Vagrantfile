@@ -27,16 +27,32 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #    :mount_options => ["dmode=777", "fmode=666"]
     
     
+    
+    
    
     # Iterate through entries in YAML file
     servers.each do |servers|
+
+
+    memory = servers['memory'] ? machineConfig['memory'] : 1024
+    cpus = servers['cpus'] ? servers['cpus'] : 2
+     
+     
+     
+     
         config.vm.define servers["name"] do |srv|
             srv.vm.box = servers["box"]
-            srv.vm.network "private_network", ip: servers["ip"]
+            
+            if servers["ip"] != nil
+              srv.vm.network "private_network", ip: servers["ip"]
+           else
+              serv.vm.network :private_network, :auto_network => true
+           end
+            
             srv.vm.provider :virtualbox do |vb|
                 vb.name = servers["name"]
-                vb.memory = servers["ram"]
-                #vb.customize ["modifyvm", :id, "--cpus", "1"]
+                vb.memory = memory
+                vb.cpus = cpus
                 vb.gui = false
             end
             if servers["prov"] == "ansible"
