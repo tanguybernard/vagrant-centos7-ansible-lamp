@@ -26,20 +26,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #config.vm.synced_folder "./", "/var/www/html", type: "rsync", id: "vagrant", :nfs => false,
     #    :mount_options => ["dmode=777", "fmode=666"]
     
-    upArgs = false
     
-    
-    #if ARGV[0] == "up"
-     #  if ARGV[1] != nil
-     #      upArgs=true
-     #    ARGV.each do |node|
-          
-     #    end
-     # end
-
-    #end     
-
- if(!upArgs)
+   
     # Iterate through entries in YAML file
     servers.each do |servers|
         config.vm.define servers["name"] do |srv|
@@ -61,7 +49,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
     
- end #end if !upArgs
 
     config.vm.provision :shell, inline: "echo Good job"
 
