@@ -43,8 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 ansible.playbook = "ansible/playbook.yml"
                 ansible.sudo = true
                 #ansible.inventory_path = "playbooks"
-            end 
-        end 
+            end
         end
     end
 
