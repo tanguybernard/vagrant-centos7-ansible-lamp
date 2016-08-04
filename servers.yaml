@@ -1,0 +1,11 @@
+---
+- name: prod
+  box: centos/7
+  ram: 2048
+  ip: 192.168.121.101
+  environment: prod
+- name: staging
+  box: centos/7
+  ram: 2048
+  ip: 192.168.121.102
+  environment: staging
