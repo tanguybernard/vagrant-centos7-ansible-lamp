@@ -40,9 +40,17 @@ terminal and run these commands:
 Note, that if you run it first time, vagrant will download the guest OS (414 MB of Centos 7 in this case) box 
 from internet, which in my case took 8 minutes and will save it locally so that vagrant can use it later.
 
-Check vagrant machines : $ vagrant global-status
 
 ![installation](installation.png)
+
+Check vagrant machines : $ vagrant global-status
+
+If you would like to provision only certain node:
+
+	vagrant up vagrant1
+
+
+
 
 ## Licence
 
