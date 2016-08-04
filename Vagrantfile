@@ -15,10 +15,13 @@ servers = YAML.load_file(File.join(File.dirname(__FILE__), 'servers.yml'))
 # Create boxes
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
-    #config.vm.hostname = "vagrantbox"
+    #https://github.com/devopsgroup-io/vagrant-hostmanager
+    config.hostmanager.enabled = true
+    config.hostmanager.manage_host = true
+    config.hostmanager.ignore_private_ip = false
+    config.hostmanager.include_offline = true
 
-    config.vm.network :forwarded_port, host: 80, guest: 80, auto_correct: true # website
-    config.vm.network :forwarded_port, guest: 443, host: 443, auto_correct: true # ssl
+    #config.vm.network :forwarded_port, host: 80, guest: 8080, auto_correct: true # website
     config.vm.network :forwarded_port, guest: 3306, host: 3306, auto_correct: true # mysql
     config.vm.network :forwarded_port, guest: 9000, host: 9000, auto_correct: true # phpmyadmin
     
@@ -34,19 +37,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     servers.each do |servers|
 
 
-    memory = servers['memory'] ? machineConfig['memory'] : 1024
+    memory = servers['memory'] ? servers['memory'] : 1024
     cpus = servers['cpus'] ? servers['cpus'] : 2
-     
+    hostname =  servers['hostname'] ? servers['hostname'] : ""
      
      
      
         config.vm.define servers["name"] do |srv|
             srv.vm.box = servers["box"]
+            srv.vm.hostname = hostname
             
             if servers["ip"] != nil
               srv.vm.network "private_network", ip: servers["ip"]
            else
-              serv.vm.network :private_network, :auto_network => true
+              srv.vm.network :private_network, :auto_network => true
            end
             
             srv.vm.provider :virtualbox do |vb|
