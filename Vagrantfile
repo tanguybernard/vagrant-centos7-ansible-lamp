@@ -38,15 +38,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 #vb.customize ["modifyvm", :id, "--cpus", "1"]
                 vb.gui = false
             end
+            if servers["prov"] == "ansible"
+            srv.vm.provision "ansible" do |ansible|
+                ansible.playbook = "ansible/playbook.yml"
+                ansible.sudo = true
+                #ansible.inventory_path = "playbooks"
+            end 
+        end 
         end
-    end
-    
-    
-
-    config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "ansible/playbook.yml"
-        ansible.sudo = true
-        #ansible.inventory_path = "playbooks"
     end
 
     config.vm.provision :shell, inline: "echo Good job, now enjoy your new vbox"
